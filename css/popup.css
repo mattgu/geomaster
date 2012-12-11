@@ -1,0 +1,11 @@
+ /** * Simple CSS3 Modal Popups | Victoria Pod */ 
+ header p {padding-top:50px;text-align:center;}
+ .button a#pop { text-align:center; position:absolute; top:30%; left:45%; background-color:#444; border: 2px solid #ddd; color: #fff; display: block; float: right; margin-right: 10px; padding: 10px 30px; font-size:20px; text-decoration: none; text-shadow: 1px 1px #000; -webkit-border-radius: 10px; -moz-border-radius: 10px; -ms-border-radius: 10px; -o-border-radius: 10px; border-radius: 10px; } 
+ a#pop:hover { border-color: #eee; } 
+ .overlay { background-color: rgba(0, 0, 0, 0.6); bottom: 0; cursor: default; left: 0; opacity: 0; position: fixed; right: 0; top: 0; visibility: hidden; z-index: 1; -webkit-transition: opacity .5s; -moz-transition: opacity .5s; -ms-transition: opacity .5s; -o-transition: opacity .5s; transition: opacity .5s; } 
+ .overlay:target { visibility: visible; opacity: 1; } 
+ .popup { background-color: #fff; border: 3px solid #fff; display: inline-block; left: 50%; opacity: 0; padding: 15px; position: fixed; text-align: justify; top: 40%; visibility: hidden; z-index: 10; -webkit-transform: translate(-50%, -50%); -moz-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); -o-transform: translate(-50%, -50%); transform: translate(-50%, -50%); -webkit-border-radius: 15px; -moz-border-radius: 15px; -ms-border-radius: 15px; -o-border-radius: 15px; border-radius: 15px; -webkit-transition: opacity .5s, top .5s; -moz-transition: opacity .5s, top .5s; -ms-transition: opacity .5s, top .5s; -o-transition: opacity .5s, top .5s; transition: opacity .5s, top .5s; } 
+ .overlay:target+.popup { top: 50%; opacity: 1; visibility: visible; } .close { background-color: #fff; height: 30px; line-height: 30px; position: absolute; right: 0; text-align: center; text-decoration: none; top: -15px; right:-10px; width: 30px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -ms-border-radius: 15px; -o-border-radius: 15px; border-radius: 15px; } 
+ .close:before { color: rgba(0, 0, 0, 0.8); content: "X"; font-size: 24px; text-shadow: 0 -1px rgba(0, 0, 0, 0.9); } 
+ .close:hover { background-color: #ddd; } 
+ .popup p { margin-bottom: 10px; } 

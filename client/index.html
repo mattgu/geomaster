@@ -2,18 +2,43 @@
 	<title>GEOmaster</title>
 	<script type="text/javascript"
 	src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry"></script>
+	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript">
+
+</script>
 </head>
 <body>
 	<div align="center">
+		{{> game_navbar}}
 		{{> index}}
+		
+	<div>
+
+<a href="#bubble" id="pop"> Click me</a>
+
+<a href="#x" class="overlay" id="bubble"></a>
+
+<div class="popup">
+
+<h1>Das Spiel ist zu ende!<h1>
+
+<h2>Deine erreichten Punkte: <div id="popupPoints"></div><h2>
+<a name="fb_share" type="button" href="http://www.facebook.com/sharer.php"> Share</a>
+<a class="close" href="#close"></a>
+</div>
+</div>
+		<div id="admin">
+		
+		{{> admin}}
+		
+		</div>
 	</div>
 </body>
 <template name="index">
-	<h1>Willkommen zu Geomaster</h1>
-	<h2>Wähle eine der folgenden Spielarten:</h2>
+<div class="background">
+	
 	{{> singelplayer}}
-	{{> sinplayerbutton}}
-	{{> learningbutton}}
+	
+	</div>
 </template>
 <template name="sinplayerbutton">
 	<input type="button" value="Singleplayer" />
@@ -37,10 +62,12 @@
 	</div>
 </template>
 <template name="singelplayer">
-	<h1>GEO Master</h1>
-	{{loginButtons}}</p>
-	Klicke auf Spiel starten um das Spiel zu beginngen, danach werden dir die Fragen und die Karte angezeigt</p>
-	Damit dein Highscore gespeichert werden kann, muss du dich einlogen bzw registrieren</p>
+	<p> </p>
+	<p> </p>
+	<p> </p>
+	</p>
+	
+	</p>
 	{{> button}} <h2>Welches Land geh&ouml;rt zu dieser Hauptstadt:<h2> {{> questions}} <h2>Punkte:<h2>
 	<div id="divpunkte">
 		000
@@ -67,3 +94,10 @@
 		{{stadt}}
 	</div>
 </template>
+
+
+
+
+
+
+

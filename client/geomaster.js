@@ -35,7 +35,16 @@ Accounts.ui.config({
 
 //Spiel Functionen
 function spielaus() {
-	alert("Das Spiel ist vorbei");
+	// das Popup wird ausgeführt mit einem simulierten Click
+	var a = $('#divpunkte').html();
+	var b = $('#popupPoints').html(a);
+	//var hallo=document.getElementById("divpunkte");
+	//document.getElementById("popupPoints").innerHTML = hallo.toString();
+	//$('popupPoints').append(document.getElementById("divpunkte"));
+	//console.log(document.getElementById("popupPoints"));
+	console.log(document.getElementById("divpunkte"));
+	document.getElementById('pop').click();
+	//alert("Das Spiel ist vorbei");
 };
 
 // Die karte verschwinden lassen wenn das spiel vorbei is
@@ -71,9 +80,9 @@ Template.button.events({
 		// zaehler für die Fragen
 		zaehler = 0;
 
-		Meteor.setTimeout(spielaus, 50000);
-		Meteor.setTimeout(deletemap, 50000);
-		Meteor.setTimeout(sethighscore, 50000);
+		Meteor.setTimeout(spielaus, 5000);
+		Meteor.setTimeout(deletemap, 5000);
+		Meteor.setTimeout(sethighscore, 5000);
 
 		var map;
 
@@ -85,7 +94,7 @@ Template.button.events({
 			map = new jvm.WorldMap({
 				map : 'europe_mill_en',
 				container : $("#map_canvas"),
-				backgroundColor : 'black',
+				backgroundColor : 'grey',
 				onRegionClick : function(event, code) {
 					if (code === Questions.find({}).fetch()[randomArray[zaehler]].kuerzel) {
 						points = points + 100;
