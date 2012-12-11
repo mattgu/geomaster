@@ -2,30 +2,32 @@ points = 0;
 zaehler = 0;
 randomArray = [];
 arrayQuestions = [];
+gameActive = false;
+
+// zufalls generator für die Fragen
+function arrayShuffle() {
+	var tmp, rand;
+	for(var i = 0; i < this.length; i++) {
+		rand = Math.floor(Math.random() * this.length);
+		tmp = this[i];
+		this[i] = this[rand];
+		this[rand] = tmp;
+	}
+};
+
+Array.prototype.shuffle = arrayShuffle;
 
 Meteor.subscribe('questions', function onComplete() {
 
-	// zufalls generator für die Fragen
-	function arrayShuffle() {
-		var tmp, rand;
-		for (var i = 0; i < this.length; i++) {
-			rand = Math.floor(Math.random() * this.length);
-			tmp = this[i];
-			this[i] = this[rand];
-			this[rand] = tmp;
-		}
-	};
-
-	Array.prototype.shuffle = arrayShuffle;
 	var questionCounter = Questions.find({}).count();
 
-	for (var i = 0; i < questionCounter; i++) {
+	for(var i = 0; i < questionCounter; i++) {
 		randomArray[i] = i;
 	};
 
-	randomArray.shuffle();
+	// randomArray.shuffle();
 	// Die Fragen in eine neue Session Schreiben
-	Session.set("question1", Questions.find({}).fetch()[randomArray[zaehler]].Stadt);
+	// Session.set("question1", Questions.find({}).fetch()[randomArray[zaehler]].Stadt);
 });
 
 // Damit sich User auch mit Usernamen anmelden kann, Standard ist nur Email
@@ -35,7 +37,13 @@ Accounts.ui.config({
 
 //Spiel Functionen
 function spielaus() {
-	alert("Das Spiel ist vorbei");
+	gameActive = false;
+	deletemap();
+	sethighscore();
+	// alert("Das Spiel ist vorbei");
+	document.getElementById('gameContainer').hidden = true;
+	document.getElementById('finalPoints').innerHTML = points;
+	document.getElementById('gameOver').hidden = false;
 };
 
 // Die karte verschwinden lassen wenn das spiel vorbei is
@@ -45,7 +53,7 @@ function deletemap() {
 
 // set highscore
 function sethighscore() {
-	if (Meteor.user()) {
+	if(Meteor.user()) {
 		Players.insert({
 			name : Meteor.user().username,
 			score : points
@@ -66,43 +74,52 @@ Template.questions.stadt = function() {
 	return Session.get("question1");
 };
 
-Template.button.events({
+Template.startButton.events({
 	'click input' : function() {
-		// zaehler für die Fragen
-		zaehler = 0;
+		if(!gameActive) {
 
-		Meteor.setTimeout(spielaus, 50000);
-		Meteor.setTimeout(deletemap, 50000);
-		Meteor.setTimeout(sethighscore, 50000);
+			randomArray.shuffle();
 
-		var map;
+			// zaehler für die Fragen
+			zaehler = 0;
+			points = 0;
+			gameActive = true;
 
-		(function() {
-			var myCustomColors = {
-				'DE-BE' : '#4E7387'
-			};
+			Meteor.setTimeout(spielaus, 5000);
 
-			map = new jvm.WorldMap({
-				map : 'europe_mill_en',
-				container : $("#map_canvas"),
-				backgroundColor : 'black',
-				onRegionClick : function(event, code) {
-					if (code === Questions.find({}).fetch()[randomArray[zaehler]].kuerzel) {
-						points = points + 100;
-						zaehler = zaehler + 1;
-						Session.set("question1", Questions.find({}).fetch()[randomArray[zaehler]].Stadt);
-					} else {
-						points = points - 100;
+			// var map;
+			document.getElementById('divpunkte').innerHTML = points;
+			document.getElementById('gameOver').hidden = true;
+			document.getElementById('gameContainer').hidden = false;
+			Session.set("question1", Questions.find({}).fetch()[randomArray[zaehler]].Stadt);
+
+			(function() {
+				var myCustomColors = {
+					'DE-BE' : '#4E7387'
+				};
+
+				var map = new jvm.WorldMap({
+					map : 'europe_mill_en',
+					container : $("#map_canvas"),
+					backgroundColor : 'black',
+					onRegionClick : function(event, code) {
+						if(code === Questions.find({}).fetch()[randomArray[zaehler]].kuerzel) {
+							points = points + 100;
+							zaehler = zaehler + 1;
+							Session.set("question1", Questions.find({}).fetch()[randomArray[zaehler]].Stadt);
+						} else {
+							points = points - 100;
+						}
+						document.getElementById('divpunkte').innerHTML = points;
+					},
+					series : {
+						regions : [{
+							attribute : 'fill'
+						}]
 					}
-					document.getElementById('divpunkte').innerHTML = points;
-				},
-				series : {
-					regions : [{
-						attribute : 'fill'
-					}]
-				}
-			});
-			map.series.regions[0].setValues(myCustomColors);
-		})();
+				});
+				map.series.regions[0].setValues(myCustomColors);
+			})();
+		}
 	}
 });
