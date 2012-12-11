@@ -1,1 +1,0 @@
-Meteor._def_template("connection_status",Handlebars.json_ast_to_func(["<span id=\"connection-status\" class=\"pull-right status-",["{",[[0,"status"]]],"\">\n        ",["{",[[0,"status"]]],"\n    </span>"]));
